@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -204,22 +204,38 @@ function getStepContent(step) {
   }
 }
 
-export default function StepperUI() {
+const StepperUI = ( { changeStep, onSelectNext } ) => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
+  const [nextDisabled, setNextDisabled] = useState(true);
+  const currentStep = changeStep;
+  console.log(currentStep);
   const steps = getSteps();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    onSelectNext(true);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    onSelectNext(false);
   };
 
   const handleReset = () => {
     setActiveStep(0);
   };
+
+  useEffect(() => {
+    const setDisabled = () => {
+      if (currentStep - activeStep == 1) {
+        setNextDisabled(false);
+      } else {
+        setNextDisabled(true);
+      };
+    };
+    setDisabled();
+  }, [currentStep]);
 
   return (
     <div className={classes.root}>
@@ -257,6 +273,7 @@ export default function StepperUI() {
                 variant="contained"
                 onClick={handleNext}
                 className={classes.button}
+                disabled={nextDisabled}
               >
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
@@ -266,4 +283,7 @@ export default function StepperUI() {
       </div>
     </div>
   );
-}
+};
+
+
+export default StepperUI;

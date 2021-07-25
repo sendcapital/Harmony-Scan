@@ -158,7 +158,7 @@ const Exchange = () => {
             color: "#00AEE9",
         },
         searchButton: {
-            background: "#69FABD",
+            background: "#ccc",
             color: "#00AEE9",
             float: "right",
             bottom: "5px",
@@ -179,7 +179,7 @@ const Exchange = () => {
     const renderData = () => {
 
         if (isLoading) {
-            return <div > < Loading / > < /div>;
+            return <div><Loading/></div>;
         }
 
         const sendValue = async() => {
@@ -187,153 +187,133 @@ const Exchange = () => {
         }
 
 
-        return ( <
-            >
-            <
-            div className = "coinlist" >
-
-            <
-            h1 > Exchange Data < /h1> <
-            h2 > { dexData.detail } < /h2> <
-            div className = { classes.container } >
-            <
-            Autocomplete id = "disabled-options-demo"
-            className = { classes.textField }
-            options = { dexData.exchanges }
-            getOptionDisabled = {
-                (option) => option === dexData.detail
-            }
-            renderInput = {
-                (params) => ( <
-                    TextField {...params }
-                    label = "Select Exchange to overlay"
-                    variant = "outlined"
-                    inputRef = { valueRef }
-                    />
-                )
-            }
-            /> <
-            Button className = { classes.searchButton }
-            onClick = { sendValue } > SELECT < /Button> < /
-            div > <
-            HistoryChart id = "reschart"
-            data = { dexData }
-            overlay = { dexoverlay }
-            />
-
-            <
-            /div> <
-            hr / >
-            <
-            div >
-            <
-            PairChart data = { pairData }
-            name = { dexData.detail }
-            /> < /
-            div > <
-            hr / >
-            <
-            div className = { classes.margin } >
-            <
-            p className = "title-heading" > Search a trading pair < /p> <
-            div className = "search-box" >
-            <
-            input type = "text"
-            placeholder = "Search pair..."
-            onChange = {
-                (e) => { setSearchText(e.target.value) }
-            }
-            /> < /
-            div >
-
-            <
-            div className = "box" >
-            <
-            table >
-            <
-            thead >
-            <
-            tr className = "row" >
-            <
-            th className = "pairs-id" > # < /th> <
-            th className = "pairs-name head" > Pair < /th> <
-            th className = "pairs-bidask head" > Bid - Ask Spread < /th> <
-            th className = "pairs-vol head" > Volume < /th> <
-            th className = "pairs-cvol head" > Converted Volume, USD < /th> <
-            th className = "pairs-rt head" > Recent transaction, USD < /th> <
-            th className = "pairs-date head" > Date of Last trade < /th> <
-            th className = "pairs-time head" > Time of Last trade < /th> < /
-            tr > <
-            /thead> <
-            tbody > {
-                searchText != "" ?
-                (pairData.map((item, index) => {
-                    if (typeof item.coin_id != 'undefined') {
-                        if (item.coin_id.toLowerCase().includes(searchText.toLowerCase())) {
-
-                            return ( <
-                                DexPairs key = { index + 1 }
-                                id = { index + 1 }
-                                name = { item.coin_id + "<>" + item.target }
-                                bidask = { item.bid_ask_spread_percentage }
-                                volume = { item.volume }
-                                cVolume = { item.converted_volume.usd }
-                                rtx = { item.converted_last.usd }
-                                date = {
-                                    (item.last_traded_at.split('T'))[0]
-                                }
-                                time = {
-                                    (item.last_traded_at.split('T'))[1]
-                                }
-                                />
-                            );
-                        }
-                    } else {
-                        return false;
+        return ( 
+            <>
+            <div className = "exchangeList" >
+                <h1> Exchange Data </h1> 
+                <h2> { dexData.detail } </h2> 
+                <div className = { classes.container } >
+                    <Autocomplete id = "disabled-options-demo"
+                    className = { classes.textField }
+                    options = { dexData.exchanges }
+                    getOptionDisabled = {
+                        (option) => option === dexData.detail
                     }
-                })) :
-                    (currentRows.map((item, index) => {
-
-                        return ( <
-                            DexPairs key = {
-                                ((currentPage * 10) - 10) + index + 1
-                            }
-                            id = {
-                                ((currentPage * 10) - 10) + index + 1
-                            }
-                            name = { item.coin_id + "<>" + item.target }
-                            bidask = { item.bid_ask_spread_percentage }
-                            volume = { item.volume }
-                            cVolume = { item.converted_volume.usd }
-                            rtx = { item.converted_last.usd }
-                            date = {
-                                (item.last_traded_at.split('T'))[0]
-                            }
-                            time = {
-                                (item.last_traded_at.split('T'))[1]
-                            }
+                    renderInput = {
+                        (params) => ( 
+                            <TextField {...params }
+                            label = "Select Exchange to overlay"
+                            variant = "outlined"
+                            inputRef = { valueRef }
                             />
-                        );
-                    }))
-            } <
-            /tbody> < /
-            table > <
-            /div>
+                        )
+                    }
+                    /> 
+                    <Button className = { classes.searchButton }
+                    onClick = { sendValue } > SELECT 
+                    </Button> 
+                </div> 
+                <HistoryChart id = "reschart"
+                data = { dexData }
+                overlay = { dexoverlay }
+                /> 
+            </div> 
+            <hr/>
+
+            <div><PairChart data = { pairData }name = { dexData.detail }/> </div> 
+
+            <hr/>
+
+            <div className = { classes.margin } >
+                <p className = "title-heading" > Search a trading pair </p> 
+                <div className = "search-box" >
+                    <input 
+                        type = "text"
+                        placeholder = "Search pair..."
+                        onChange = {
+                            (e) => { setSearchText(e.target.value) }
+                        }
+                    /> 
+                </div>
+
+                <div className = "box" >
+                    <table>
+                        <thead>
+                        <tr className = "row" >
+                        <th className = "pairs-id" > # </th> 
+                        <th className = "pairs-name head" > Pair </th> 
+                        <th className = "pairs-bidask head" > Bid - Ask Spread </th> 
+                        <th className = "pairs-vol head" > Volume </th> 
+                        <th className = "pairs-cvol head" > Converted Volume, USD </th> 
+                        <th className = "pairs-rt head" > Recent transaction, USD </th>
+                        <th className = "pairs-date head" > Date of Last trade </th> 
+                        <th className = "pairs-time head" > Time of Last trade </th> 
+                        </tr> 
+                        </thead> 
+                        <tbody> 
+                        {
+                            searchText != "" ?
+                            (pairData.map((item, index) => {
+                                if (typeof item.coin_id != 'undefined') {
+                                    if (item.coin_id.toLowerCase().includes(searchText.toLowerCase())) {
+
+                                        return ( 
+                                            <DexPairs key = { index + 1 }
+                                                id = { index + 1 }
+                                                name = { item.coin_id + "<>" + item.target }
+                                                bidask = { item.bid_ask_spread_percentage }
+                                                volume = { item.volume }
+                                                cVolume = { item.converted_volume.usd }
+                                                rtx = { item.converted_last.usd }
+                                                date = {
+                                                    (item.last_traded_at.split('T'))[0]
+                                                }
+                                                time = {
+                                                    (item.last_traded_at.split('T'))[1]
+                                                }
+                                            />
+                                        );
+                                    }
+                                } else {
+                                    return false;
+                                }
+                            })) :
+                                (currentRows.map((item, index) => {
+
+                                    return ( 
+                                        <DexPairs
+                                            key = {((currentPage * 10) - 10) + index + 1}
+                                            id = {((currentPage * 10) - 10) + index + 1}
+                                            name = { item.coin_id + "<>" + item.target }
+                                            bidask = { item.bid_ask_spread_percentage }
+                                            volume = { item.volume }
+                                            cVolume = { item.converted_volume.usd }
+                                            rtx = { item.converted_last.usd }
+                                            date = {
+                                                (item.last_traded_at.split('T'))[0]
+                                            }
+                                            time = {
+                                                (item.last_traded_at.split('T'))[1]
+                                            }
+                                        />
+                                    );
+                                }))
+                        } 
+                        </tbody> 
+                    </table> 
+                </div>
 
             {
                 searchText == "" &&
-                    <
-                    Pagination
-                rowsPerPage = { rowsPerPage }
-                totalRows = { pairData.length }
-                currentPage = { currentPage }
-                setCurrentPage = { setCurrentPage }
-                />
-            } <
-            /div> <
-            Footer / >
-            <
-            />
+                    <Pagination
+                        rowsPerPage = { rowsPerPage }
+                        totalRows = { pairData.length }
+                        currentPage = { currentPage }
+                        setCurrentPage = { setCurrentPage }
+                    />
+            } </div> 
+            <Footer/>
+            </>
         );
     };
 
