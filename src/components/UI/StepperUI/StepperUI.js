@@ -209,7 +209,6 @@ const StepperUI = ( { changeStep, onSelectNext } ) => {
   const [activeStep, setActiveStep] = useState(0);
   const [nextDisabled, setNextDisabled] = useState(true);
   const currentStep = changeStep;
-  console.log(currentStep);
   const steps = getSteps();
 
   const handleNext = () => {
@@ -228,14 +227,16 @@ const StepperUI = ( { changeStep, onSelectNext } ) => {
 
   useEffect(() => {
     const setDisabled = () => {
-      if (currentStep - activeStep == 1) {
+      console.log(currentStep);
+      console.log(activeStep);
+      if (currentStep - activeStep == 1 || currentStep - activeStep == 2) {
         setNextDisabled(false);
       } else {
         setNextDisabled(true);
       };
     };
     setDisabled();
-  }, [currentStep]);
+  }, [activeStep, currentStep]);
 
   return (
     <div className={classes.root}>

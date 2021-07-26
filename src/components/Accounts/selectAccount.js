@@ -186,8 +186,6 @@ const SelectAccount = ( { onSelectAccounts, onGetSavedAccounts } ) => {
             console.log('not selected');
         };
     };
-    console.log('help 2');
-    console.log(isSelected);
     selectingAccounts();
   }, [isSelected]);
 
