@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../components/UI/Footer/footer';
-import SelectAccount from '../components/Accounts/selectAccount';
-import SelectExchange from '../components/Exchanges/selectExchange';
-import StepperUI from '../components/UI/StepperUI/StepperUI';
+import SelectAccount from '../components/selectAccount';
+import SelectExchange from '../components/selectExchange';
+import StepperUI from '../src/StepperUI';
 import { makeStyles } from '@material-ui/core/styles';
-import InfoChart from '../components/InfoChart/InfoChart';
-
-
+import InfoChart from '../components/InfoChart';
+import Header from '../src/Header';
+import Footer from '../src/Footer';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -110,6 +109,7 @@ const Account = () => {
 
   return (
     <>
+      <Header />
       <h1>Create Visualization</h1>
       <div className={classes.container}>
         {nextPage==0 && <SelectAccount onSelectAccounts={selectAccountsHandler} onGetSavedAccounts={savedAccounts} />}

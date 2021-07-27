@@ -1,16 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
-import HistoryChart from "../components/HistoryChart/HistoryChart";
-import PairChart from "../components/PairChart/PairChart";
-import coinGecko from "../api/coinGecko";
-import DexPairs from "../components/Dex/DexPairs";
-import Pagination from '../components/UI/Pagination/Pagination';
+import HistoryChart from "../components/HistoryChart";
+import PairChart from "../components/PairChart";
+import coinGecko from "./api/coinGecko";
+import DexPairs from "../components/DexPairs";
+import Pagination from '../src/Pagination';
 import Button from '@material-ui/core/Button';
 import { TextField } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
-import Loading from '../components/UI/loading/loading';
-import Footer from '../components/UI/Footer/footer';
+import Loading from '../src/Loading';
+import Footer from '../src/Footer';
+import Header from '../src/Header';
+import { useRouter } from "next/router";
 
 const Exchange = () => {
     const [dexData, setDexData] = useState({});
@@ -21,11 +22,11 @@ const Exchange = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(10);
     const [searchText, setSearchText] = useState("");
-
+    const router = useRouter()
     const valueRef = useRef('');
-
-    const location = useLocation();
-    const id = location.state.dex;
+    const {
+    query: { id },
+    } = router;
 
     const formatData = (data) => {
         return data.map((el) => {
@@ -188,7 +189,8 @@ const Exchange = () => {
 
 
         return ( 
-            <>
+          <>
+          <Header />
             <div className = "exchangeList" >
                 <h1> Exchange Data </h1> 
                 <h2> { dexData.detail } </h2> 
@@ -312,8 +314,8 @@ const Exchange = () => {
                         setCurrentPage = { setCurrentPage }
                     />
             } </div> 
-            <Footer/>
-            </>
+          <Footer />
+          </>
         );
     };
 

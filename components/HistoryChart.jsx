@@ -1,10 +1,32 @@
 import React, { useRef, useEffect, useState } from "react";
-import { historyOptions } from "../../config/chartConfigs";
+import { historyOptions } from "../chartjs/chartConfig";
 import Chartjs from "chart.js";
 import Button from '@material-ui/core/Button';
-import './HistoryChart.css';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(() => ({
+  margin: {
+    margin: "8px !important",
+  },
+
+  charting: {
+    background: "#f8f8ff",
+    borderColor: "rgba(174, 305, 194, 0.4)",
+    marginLeft: "200px",
+    marginRight: "200px",
+    paddingLeft: "80px",
+    paddingRight: "80px",
+    paddingTop: "32px",
+    paddingBottom: "32px",
+    color: "#00AEE9",
+    border: "5px solid",
+    borderRadius: "25px",
+  }
+  }));
+
+  
 const HistoryChart = ({ data, overlay }) => {
+  const classes = useStyles();
   const chartRef = useRef();
   const { day, week, year, detail, tickers } = data;
   const [timeFormat, setTimeFormat] = useState("24h");
@@ -106,7 +128,10 @@ const HistoryChart = ({ data, overlay }) => {
       return (
         <>
           <p>Trade Volume for {tickers.name} in past 24h: {tickers.trade_volume_24h_btc.toFixed(2)} BTC</p>
-          {overlaytickers && <p>Trade Volume for {capitalizeFirstLetter(overlay.detail)} in past 24h:  {overlaytickers.trade_volume_24h_btc.toFixed(2)} BTC</p>}
+          {overlaytickers && <p>
+          Trade Volume for {capitalizeFirstLetter(overlay.detail)} in past 24h:  
+          {overlaytickers.trade_volume_24h_btc.toFixed(2)} BTC
+          </p>}
         </>
       );
     }
@@ -114,7 +139,7 @@ const HistoryChart = ({ data, overlay }) => {
 
   return ( 
     <>
-    <div className ='charting' >   
+    <div className ={classes.charting} >   
       <div>{renderVol()}</div>
       <div id="graph-container">
         <canvas ref = { chartRef }
@@ -123,7 +148,7 @@ const HistoryChart = ({ data, overlay }) => {
         height={400}  > </canvas> 
       </div>
       <div>
-        <Button variant="outlined" size="medium" className='margin' disabled={daydisable}
+        <Button variant="outlined" size="medium" className={classes.margin} disabled={daydisable}
         onClick = {() => {
           setTimeFormat("24h");
           chartInstance.destroy();
@@ -134,7 +159,7 @@ const HistoryChart = ({ data, overlay }) => {
         24 h 
         </Button> 
 
-        <Button variant="outlined" size="medium" className='margin' disabled={weekdisable}
+        <Button variant="outlined" size="medium" className={classes.margin} disabled={weekdisable}
         onClick = {() => {
           setTimeFormat("7d");
           chartInstance.destroy();
@@ -145,7 +170,7 @@ const HistoryChart = ({ data, overlay }) => {
         7 d 
         </Button> 
 
-        <Button variant="outlined" size="medium" className='margin' disabled={yeardisable}
+        <Button variant="outlined" size="medium" className={classes.margin} disabled={yeardisable}
         onClick = {() => {
           setTimeFormat("1y");
           chartInstance.destroy();

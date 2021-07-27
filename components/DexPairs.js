@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 const DexPairs = (props) => {
-
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-  
+  };
+
   return (
     <>
-      <tr className="row" 
-      >
+      <tr className="row" >
         <td className="dex-id">{props.id}</td>
         <td className="dex-name">{capitalizeFirstLetter(props.name)}</td>
         <td className="dex-bidask">{props.bidask.toFixed(4)}%</td>
