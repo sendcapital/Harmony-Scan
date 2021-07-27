@@ -204,12 +204,13 @@ function getStepContent(step) {
   }
 }
 
-const StepperUI = ( { changeStep, onSelectNext } ) => {
+const StepperUI = ( { changeStep, onSelectNext, onSelectReset } ) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [nextDisabled, setNextDisabled] = useState(true);
   const currentStep = changeStep;
   const steps = getSteps();
+  console.log(steps);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -223,6 +224,7 @@ const StepperUI = ( { changeStep, onSelectNext } ) => {
 
   const handleReset = () => {
     setActiveStep(0);
+    onSelectReset();
   };
 
   useEffect(() => {
@@ -231,9 +233,11 @@ const StepperUI = ( { changeStep, onSelectNext } ) => {
       console.log(activeStep);
       if (currentStep - activeStep == 1 || currentStep - activeStep == 2) {
         setNextDisabled(false);
+      } else if (currentStep == 2 && activeStep == 2) {
+        setNextDisabled(false);
       } else {
         setNextDisabled(true);
-      };
+      }
     };
     setDisabled();
   }, [activeStep, currentStep]);
