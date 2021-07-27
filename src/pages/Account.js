@@ -4,7 +4,7 @@ import SelectAccount from '../components/Accounts/selectAccount';
 import SelectExchange from '../components/Exchanges/selectExchange';
 import StepperUI from '../components/UI/StepperUI/StepperUI';
 import { makeStyles } from '@material-ui/core/styles';
-
+import InfoChart from '../components/InfoChart/InfoChart';
 
 
 
@@ -99,6 +99,14 @@ const Account = () => {
     };
   };
 
+  const selectResetHandler = () => {
+    setSavedAccounts(null);
+    setAccountsBool(false);
+    setSavedExchanges(undefined);
+    setExchangesBool(false);
+    setNextPage(0);
+    setStep(0);
+  };
 
   return (
     <>
@@ -106,9 +114,14 @@ const Account = () => {
       <div className={classes.container}>
         {nextPage==0 && <SelectAccount onSelectAccounts={selectAccountsHandler} onGetSavedAccounts={savedAccounts} />}
         {nextPage==1 && <SelectExchange onSelectExchanges={selectExchangesHandler} onGetSavedExchanges={savedExchanges}/>}
-        {nextPage==2 && <p>No</p>}
+        {nextPage==2 && <InfoChart accounts={savedAccounts} exchanges={savedExchanges}/>}
+        {nextPage==3 && <p>Hello</p>}
         <div className={classes.contentWrap}>
-          <StepperUI changeStep={step} onSelectNext={selectNextHandler} className={classes.fixed}/>
+          <StepperUI 
+            changeStep={step} 
+            onSelectNext={selectNextHandler} 
+            onSelectReset={selectResetHandler}
+            className={classes.fixed}/>
         </div>
       </div>  
       <Footer />
