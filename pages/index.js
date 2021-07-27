@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Dex from "../components/Dex/Dex";
-import Pagination from '../components/UI/Pagination/Pagination';
+import Dex from "../components/Dex";
+import Pagination from '../src/Pagination';
 import axios from "axios";
-import Footer from '../components/UI/Footer/footer';
+import Footer from '../src/Footer';
+import Header from '../src/Header';
 
 function Home() {
     const [dex, setDex] = useState([]);
@@ -26,7 +27,7 @@ function Home() {
     return (
       <>
   
-  
+        <Header />
         <h1>HarmonyScan</h1>
   
         <section>

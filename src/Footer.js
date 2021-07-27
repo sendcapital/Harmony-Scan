@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     right: "0",
     alignItems: "left",
     background: 'linear-gradient(15deg, #00AEE9 0%, #69FABD 100%)',
-    padding: "35px 100px 0px",
+    padding: "25px 100px 25px",
     fontSize: "15px",
     lineHeight: "24px",
     color: "#FFF",    
